@@ -148,14 +148,14 @@ smbget -R -U TempUser smb://10.10.10.178/Secure\$/IT/Carl/
 
 You can hide informations in a stream. You can detect with smbclient:
 
-   smbclient -U LOGIN \\\\10.10.10.178\\C\$\\ <PASS>
-   > cd xxx
-   > allinfo a_file
+    smbclient -U LOGIN \\\\10.10.10.178\\C\$\\ <PASS>
+    > cd xxx
+    > allinfo a_file
 
 Or with powershell:
 
-   Get-Item -Path .\a_file  -Stream *
-   Get-Content -Path .\a_file -Stream the_stream
+    Get-Item -Path .\a_file  -Stream *
+    Get-Content -Path .\a_file -Stream the_stream
 
 
 
