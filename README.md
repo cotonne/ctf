@@ -167,6 +167,8 @@ Or with powershell:
  - [LinEnum.sh](https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh)
  - [linuxprivesc](https://github.com/sleventyeleven/linuxprivchecker/blob/master/linuxprivchecker.py)
 
+Basic user info:
+
     # id
 
 Find backups files:
@@ -198,7 +200,9 @@ View environment variables
  - Hidden comments in source code (paths, password, ...)
  - SQLi
 
-    sqlmap -u http://10.10.10.151/user/login.php --data 'username=test&password=test&submit
+```
+# sqlmap -u http://10.10.10.151/user/login.php --data 'username=test&password=test&submit
+```
 
 
 
@@ -209,7 +213,7 @@ View environment variables
 
 Finding a specific exploit
 
-   msf5 > grep eternal search blue
+    msf5 > grep eternal search blue
 
 
 
@@ -247,7 +251,7 @@ Port forwarding (to access a local service from a remote machine)
 
 ## Good practices
 
-Put all users in users.txt and all passwords in passwords.txt
+Put all users in users.txt and all passwords in passwords.txt. Use scanners from msfconsole to easily test all posibilities.
 
 
 Find CVE
