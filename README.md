@@ -115,7 +115,7 @@ List contents of shares:
 
 Retrieve a folder recursively:
 
-    smbget -R -U User smb://10.10.10.178/XXX/
+    smbget -R -U User smb://10.10.10.178/SHARE\$/XXX/
 
 ## Powershell
 
@@ -126,10 +126,6 @@ Running remote script directly
 Run WinRM commands from powershell:
 
     Invoke-Command -Credential $credential -ScriptBlock { whoami } -Computer $computer
-
-## Samba
-
-smbget -R -U TempUser smb://10.10.10.178/Secure\$/IT/Carl/
 
 ## Common attacks
 
