@@ -51,12 +51,19 @@ Cracking with hashcat:
 
 # Servers
 
-HTTP Server
+## Detecting incoming connections
+
+For ICMP
+
+    tcpdump -i tun0 icmp
+
+## HTTP Server
+
+Share your local directory
 
     python3 -m http.server 80
 
-
-Samba Server
+## Samba Server
 
     # cat /etc/samba/smb.conf
     [htb]
@@ -77,6 +84,12 @@ Samba Server
     
     # service nmbd start
     # service smbd start
+
+## Simple FTP
+
+Twisted
+
+    twistd -n ftp
 
 # Windows
 
