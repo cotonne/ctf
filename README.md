@@ -19,7 +19,7 @@ Fuzzing vhosts
 
 Fuzzing for backup:
 
-    $ wfuzz -Z -c -z file,/usr/share/dirbwordlists --hc 404 http://10.10.10.158/index.php.FUZZ 
+    $ wfuzz -Z -c -z file,/usr/share/dirb/wordlists/mutations_common.txt --hc 404 http://10.10.10.156/index.html.FUZZ 
 
 Also .something.swp for VIM
 
