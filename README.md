@@ -15,7 +15,7 @@ Fuzzing page
 
 Fuzzing vhosts
 
-    $ wfuzz -z file,wordlist/general/common.txt -H "Host: FUZZ" http://testphp.vulnweb.com/
+    $ wfuzz -z file,/usr/share/wfuzz/wordlist/general/common.txt -H "Host: FUZZ" http://testphp.vulnweb.com/
 
 Fuzzing for backup:
 
@@ -155,19 +155,23 @@ Run WinRM commands from powershell:
 
 ## WTFs?
 
-You can hide informations in a stream. You can detect with smbclient:
+You can hide informations in a Alternate Data Stream. You can detect with smbclient:
 
     smbclient -U LOGIN \\\\10.10.10.178\\C\$\\ <PASS>
     > cd xxx
     > allinfo a_file
+    ...
+    stream: [:<STREAM_NAME>:$DATA], 15 bytes
+
+You can [view ADS with smbclient from Linux](https://superuser.com/questions/1520250/read-alternate-data-streams-over-smb-with-linux)
+
+    smbclient -U <LOGIN> //<IP>/<SHARE> <PASS>
+    more PATH/TO/FILE:<STREAM NAME>:$DATA
 
 Or with powershell:
 
     Get-Item -Path .\a_file  -Stream *
     Get-Content -Path .\a_file -Stream the_stream
-
-
-
 
 # Linux
 
