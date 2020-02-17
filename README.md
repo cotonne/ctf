@@ -204,6 +204,10 @@ View environment variables
 
     # export
 
+Port forwarding to access a local postgres server:
+
+    # ssh -i ~/.ssh/id_ed25519 -L 10.11.12.14:5432:127.0.0.1:5432 user@10.10.10.10
+
 
 ## Getting root
 
