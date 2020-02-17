@@ -146,6 +146,10 @@ Running remote script directly
 
 Run WinRM commands from powershell:
 
+    $username = 'HOST\Login'
+    $password = '<PASS>'
+    $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+    $credential = New-Object System.Management.Automation.PSCredential $username, $securePassword
     Invoke-Command -Credential $credential -ScriptBlock { whoami } -Computer $computer
 
 ## Common attacks
