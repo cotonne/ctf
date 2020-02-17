@@ -41,6 +41,14 @@ Running John:
 
     # john --format=dynamic_82 --wordlist=wordlist.txt --rules=d3ad0ne hash.txt
 
+List formats:
+
+    # john --list=format-details
+
+Password with known part:
+
+    # john --format=dynamic_1034 --wordlist=/usr/share/wordlists/rockyou.txt --mask='?wknown-part' hashes.txt
+
 A lot of scripts to convert to JOHN are under /usr/share/john/
 
 Cracking with hashcat:
@@ -216,7 +224,6 @@ View environment variables
 ```
 # sqlmap -u http://10.10.10.151/user/login.php --data 'username=test&password=test&submit
 ```
-
 
 
 
