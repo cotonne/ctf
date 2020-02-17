@@ -196,17 +196,38 @@ Basic user info:
 
     # id
 
+View environment variables
+
+    # export
+
+View running services:
+
+    # netstat
+
+### Find interesting files
+
 Find backups files:
 
     # find / -name *.bak 2> /dev/null
 
 Find keys:
 
-    # find / -name id_rsa* 2> /dev/null
+    # find / -name id_* 2> /dev/null
 
-View environment variables
+Find hidden files:
+ 
+    # find / -name ".*" 2> /dev/null
 
-    # export
+Find a file owned by a group or a user:
+
+    # find / -user root -group root -type f
+
+Find files with specific permissions:
+
+    # find / -perm -4000 -type f # With suid
+    # find / -perm /u=w -type d -user qtc # User qtc has write access to a directory
+
+## Misc
 
 Port forwarding to access a local postgres server:
 
@@ -276,6 +297,12 @@ Port forwarding (to access a local service from a remote machine)
  - [.Net Reflector](https://www.red-gate.com/products/dotnet-development/reflector/)
 
 # MISC 
+
+## Python
+
+ * [Simple IPv4 TCP client](client.py)
+ * [Simple IPv6 HTTP server](server.py)
+ * [Snippet (md5, regex ...)](snippet.py)
 
 ## Good practices
 
