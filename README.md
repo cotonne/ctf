@@ -318,7 +318,7 @@ Put on the machine and run
 
 Port forwarding (to access a local service from a remote machine)
 
-    meterpreter > portfwd add -l 4021 -L 10.10.14.8 -r <remote>
+    meterpreter > portfwd add -L <local host> -l <local port> -r <remote host> -p <remote port>
 
 # Reversing
 
