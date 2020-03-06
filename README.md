@@ -3,9 +3,14 @@ Paths are for KALI
 # Enumeration
 
 ## Port Discovery
+
 List all ports with possible vulnerabilities
 
     $ nmap -p4386 -v -sS -sV --script vuln 10.10.10.178
+
+You can also use netcat to do port scanning
+
+    $ nc -zv localhost 1-65535
 
 ## Web Fuzzing
 
@@ -249,6 +254,10 @@ Find files with specific permissions:
 
     # find / -perm -4000 -type f # With suid
     # find / -perm /u=w -type d -user qtc # User qtc has write access to a directory
+
+Find files modified from a date:
+
+    # find . -type f -newermt 2020-02-11 -exec ls -l {} \; 
 
 ## Misc
 
