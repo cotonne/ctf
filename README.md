@@ -133,9 +133,14 @@ Get all infos about user:
 With SEImpersonification, have a look to [LovelyPotato](https://github.com/TsukiCTF/Lovely-Potato)
 
 
-Quering the registery
+Querying the registery
 
     reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+
+Querying the registry with PowerShell
+
+    Get-ChildItem -Path Registry::HKLM\SOFTWARE\Wow6432Node\ # Display property
+    (Get-ItemProperty -Path Registry::HKLM\SOFTWARE\an\item).subkey
     
 Find all files with the word password, case insensitive
 
