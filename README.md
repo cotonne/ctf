@@ -28,6 +28,10 @@ Fuzzing for backup:
 
 Also .something.swp for VIM
 
+Combining multiples sources:
+
+   $ wfuzz -z file,big.txt -z file,common.txt --hc 404 http://forwardslash.htb/FUZZ/FUZ2Z.php
+
 ## LDAP
 
 List users:
@@ -36,7 +40,7 @@ List users:
 
 Find if an entry password exits:
 
-    ldapsearch -h 10.10.10.161 -p 389 -x -b 'CN=htb,DC=local' "(sAMAccountName=*)" "*" + | grep -i password
+    ldapsearch -h 10.10.10.161 -p 389 -x -b 'CN=htb,DC=local' "(sAMAccountName=*)" "*" + | egrep -i "(password|pwd|pass|passwd)"
 
 ## DNS
 
