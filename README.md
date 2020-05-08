@@ -32,6 +32,12 @@ Combining multiples sources:
 
    $ wfuzz -z file,big.txt -z file,common.txt --hc 404 http://forwardslash.htb/FUZZ/FUZ2Z.php
 
+Range of values:
+
+   $ wfuzz -z range --zD 0-3 -z list --zD "'" -u http://testphp.vulnweb.com/artists.php?artist=FUZZFUZ2Z -A
+
+Reference: [wfuzz manual](https://wfuzz.readthedocs.io/en/latest/user/advanced.html)
+
 ## LDAP
 
 List users:
