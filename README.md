@@ -72,7 +72,7 @@ Cracking with hashcat:
     # hashcat --force -m 15000 -a 0 hash.txt /usr/share/wordlists/rockyou.txt
 
 
-# Servers
+# Services
 
 ## Detecting incoming connections
 
@@ -80,13 +80,13 @@ For ICMP
 
     tcpdump -i tun0 icmp
 
-## HTTP Server
+## HTTP Service
 
 Share your local directory
 
     python3 -m http.server 80
 
-## Samba Server
+## Samba Service
 
     # cat /etc/samba/smb.conf
     [htb]
@@ -113,6 +113,16 @@ Share your local directory
 Twisted
 
     twistd -n ftp
+
+# Reverse Shells
+
+ - A reference: [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md)
+ - Gaining a tty on Linux (From [Upgrading Simple Shells to Fully Interactive TTYs](https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/))
+
+```bash
+$ python -c 'import pty; pty.spawn("/bin/bash")'
+$ stty rows 38 columns 250
+```
 
 # Windows
 
@@ -240,6 +250,11 @@ View environment variables
 View running services:
 
     # netstat
+
+View actions of process:
+  
+   # strace
+   # [pspy64](https://github.com/DominicBreuker/pspy)
 
 ### Find interesting files
 
