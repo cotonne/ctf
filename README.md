@@ -4,6 +4,10 @@ Paths are for KALI
 
 ## Port Discovery
 
+Fast port discovery
+
+    $ sudo docker run -it --rm --name rustscan rustscan/rustscan:1.10.0 10.10.10.242
+
 List all ports with possible vulnerabilities
 
     $ nmap -p4386 -v -sS -sV --script vuln 10.10.10.178
