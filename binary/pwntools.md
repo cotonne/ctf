@@ -1,4 +1,26 @@
-# RET2LIBC Example
+# pwntools
+
+## Functions
+
+ - shellcode = ELF("a.out").section(".text")
+ - print(disasm(shellcode))
+ - shellcraft 
+
+```bash
+$ pwn shellcraft -l 'amd64.linux' # List available shellcodes
+$ pwn shellcraft amd64.linux.sh -r # run a shellcode
+$ python3                         
+>>> from pwn import *
+>>> context(os="linux", arch="amd64", log_level="error")
+>>> syscall = shellcraft.execve(path='/bin/sh',argv=['/bin/sh']) 
+>>> print(syscall)
+... asm ...
+>>> bin = asm(syscall)
+>>> ELF.from_bytes(bin).save("a.out")
+```
+
+
+## RET2LIBC Example
 
 ```python
 from pwn import *

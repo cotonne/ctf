@@ -10,6 +10,8 @@
  
  curl -o  ~/.gdbinit-gef.py -q https://gef.blah.cat/py
  echo source ~/.gdbinit-gef.py >> ~/.gdbinit
+ - Dump a specific section : objcopy crackme1 --dump-section .data=out
+ - Dump a specific section (pwntools): 
 
 ## Hello World in asm
 
@@ -113,28 +115,28 @@ $ ld -o a.out hello.o
 
 | Instruction | Description | Example |
 |--|--|--|
-| mov | Move data or load immediate data | mov rax, 1 -> rax = 1, mov rax, [rbx] -> rax = *rbx |
+| mov | Move data or load immediate data | mov rax, 1 -> rax = 1, mov rax, [rbx] -> rax = \*rbx |
 | lea | Load an address pointing to the value | lea rax, [rsp+5] -> rax = rsp+5 |
 | xchg | Swap data between two registers or addresses | xchg rax, rbx -> rax = rbx, rbx = rax |
 | inc | Increment by 1 | inc rax -> rax++ or rax += 1 -> rax = 2 |
 | dec | Decrement by 1 | dec rax -> rax-- or rax -= 1 -> rax = 0 |
-| add | Add both operands | add rax, rbx -> rax = 1 + 1 -> 2
-| sub | Subtract Source from Destination (i.e rax = rax - rbx) | sub rax, rbx -> rax = 1 - 1 -> 0
-| imul | Multiply both operands | imul rax, rbx -> rax = 1 * 1 -> 1
-| not | Bitwise NOT (invert all bits, 0->1 and 1->0) | not rax -> NOT 00000001 -> 11111110
-| and | Bitwise AND (if both bits are 1 -> 1, if bits are different -> 0) | and rax, rbx -> 00000001 AND 00000010 -> 00000000
-| or | Bitwise OR (if either bit is 1 -> 1, if both are 0 -> 0) | or rax, rbx -> 00000001 OR 00000010 -> 00000011
-| xor | Bitwise XOR (if bits are the same -> 0, if bits are different -> 1) | xor rax, rbx -> 00000001 XOR 00000010 -> 00000011
-| mov rcx, x | Sets loop (rcx) counter to x | mov rcx, 3
-| loop | Jumps back to the start of loop until counter/rcx reaches 0 | loop label
-| jmp | Jumps to specified label, address, or location | jmp loop
-| jz,jnz,js,jns,jge, jl ,jle => RFLAGS/EFLAGS
-| cmp | Sets RFLAGS by subtracting second operand from first operand (i.e. first - second) | cmp rax, rbx -> rax - rbx
-| push | Copies the specified register/address to the top of the stack | push rax
-| pop | Moves the item at the top of the stack to the specified register/address | pop rax
-| syscall | call a system function like write (refer to unistd_64.h & man -s 2 write) | syscall 1 (write(XXX)) |
-| call | push the next instruction pointer rip to the stack, then jumps to the specified procedure | call printMessage
-| ret | pop the address at rsp into rip, then jump to it | ret
+| add | Add both operands | add rax, rbx -> rax = 1 + 1 -> 2 |
+| sub | Subtract Source from Destination (i.e rax = rax - rbx) | sub rax, rbx -> rax = 1 - 1 -> 0 |
+| imul | Multiply both operands | imul rax, rbx -> rax = 1 * 1 -> 1 |
+| not | Bitwise NOT (invert all bits, 0->1 and 1->0) | not rax -> NOT 00000001 -> 11111110 |
+| and | Bitwise AND (if both bits are 1 -> 1, if bits are different -> 0) | and rax, rbx -> 00000001 AND 00000010 -> 00000000 |
+| or | Bitwise OR (if either bit is 1 -> 1, if both are 0 -> 0) | or rax, rbx -> 00000001 OR 00000010 -> 00000011 |
+| xor | Bitwise XOR (if bits are the same -> 0, if bits are different -> 1) | xor rax, rbx -> 00000001 XOR 00000010 -> 00000011|
+| mov rcx, x | Sets loop (rcx) counter to x | mov rcx, 3|
+| loop | Jumps back to the start of loop until counter/rcx reaches 0 | loop label|
+| jmp | Jumps to specified label, address, or location | jmp loop|
+| jz,jnz,js,jns,jge, jl ,jle | jump zero, negative, less/greater, ...| RFLAGS/EFLAGS |
+| cmp | Sets RFLAGS by subtracting second operand from first operand (i.e. first - second) | cmp rax, rbx -> rax - rbx |
+| push | Copies the specified register/address to the top of the stack | push rax |
+| pop | Moves the item at the top of the stack to the specified register/address | pop rax |
+| syscall | call a system function like write (refer to unistd\_64.h & man -s 2 write) | syscall 1 (write(XXX)) |
+| call | push the next instruction pointer rip to the stack, then jumps to the specified procedure | call printMessage |
+| ret | pop the address at rsp into rip, then jump to it | ret |
 
  To call a syscall, we have to:
 
@@ -211,6 +213,10 @@ gcc -shared -o libs/libx.so -fPIC libs/libx.c
 
     $ ropper --file libc.so --search "add jsp, 0x??"
 
+
+pwn disasm '0xhex' -c 'amd64'
+
 # References
 
  - [Leaking information](https://github.com/Naetw/CTF-pwn-tips)
+ - [Shellcode](https://shell-storm.org/shellcode/index.html)

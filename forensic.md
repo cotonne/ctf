@@ -67,6 +67,7 @@ export PATH=$HOME/.local/bin:$PATH
 ## Windows
 
  - Kerberoasting: servicePrincipalName
+ - Groups.xml: contains cpassword ([Fix AES key](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gppref/2c15cbf0-f086-4c74-8b70-1f2fa45dd4be?redirectedfrom=MSDN), base64 encoded, iv = 00 * 16).  Ref: [Privilege Escalation via Group Policy Preferences (GPP)](https://www.mindpointgroup.com/blog/privilege-escalation-via-group-policy-preferences-gpp)
 
 ## Reference 
 
