@@ -55,6 +55,17 @@ export PATH=$HOME/.local/bin:$PATH
 
  - Get Windows env: `vol -f mem.dmp windows.envars.Envars`
  - Get Hashes : `vol -f mem.dmp windows.hashdump.Hashdump`
+ - List of cmdllines: `vol -f ch2.dmp windows.cmdline.CmdLine`
+ - Extract file from dump
+```
+> vol -f memory.dmp windows.filescan.FileScan | grep filename 
+> vol -f memory.dmp windows.dumpfiles.DumpFiles --physaddr 0xXXX
+```
+ - Find which process owns a given string
+```
+echo "Interesting strings" > strings.txt
+vol -f memory.dmp windows.strings.Strings --strings-file strings.txt
+```
 
 ## 
 
@@ -66,7 +77,6 @@ export PATH=$HOME/.local/bin:$PATH
 
 ## Windows
 
- - Kerberoasting: servicePrincipalName
  - Groups.xml: contains cpassword ([Fix AES key](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gppref/2c15cbf0-f086-4c74-8b70-1f2fa45dd4be?redirectedfrom=MSDN), base64 encoded, iv = 00 * 16).  Ref: [Privilege Escalation via Group Policy Preferences (GPP)](https://www.mindpointgroup.com/blog/privilege-escalation-via-group-policy-preferences-gpp)
 
 ## Reference 

@@ -1,0 +1,4 @@
+ - EWF : ewfmount to access the file
+ - DOCX : oletools
+   - Can be unzip
+   - Extract macro: olevba doc.docx

