@@ -6,6 +6,7 @@
  - identify -verbose
  - hexdump -C
  - strings
+ - gimp (can read RAW image data from .data file)
 
 
 ## Lost Partition/File
@@ -64,8 +65,10 @@ export PATH=$HOME/.local/bin:$PATH
  - Find which process owns a given string
 ```
 echo "Interesting strings" > strings.txt
+strings -t x memory.dmp | grep A_string > strings.txt
 vol -f memory.dmp windows.strings.Strings --strings-file strings.txt
 ```
+ - Dump memory from process: ` vol -f image.dmp windows.pslist.PsList --pid 2608 --dump`
 
 ## 
 
