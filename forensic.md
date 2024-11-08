@@ -55,7 +55,7 @@ export PATH=$HOME/.local/bin:$PATH
 ## Plugins 
 
  - Get Windows env: `vol -f mem.dmp windows.envars.Envars`
- - Get Hashes : `vol -f mem.dmp windows.hashdump.Hashdump`
+ - Get Password Hashes : `vol -f mem.dmp windows.hashdump.Hashdump`
  - List of cmdllines: `vol -f ch2.dmp windows.cmdline.CmdLine`
  - Extract file from dump
 ```
@@ -69,7 +69,9 @@ strings -t x memory.dmp | grep A_string > strings.txt
 vol -f memory.dmp windows.strings.Strings --strings-file strings.txt
 ```
  - Dump memory from process: ` vol -f image.dmp windows.pslist.PsList --pid 2608 --dump`
-
+ - Dump memory from process: ` vol -f memory.dmp windows.memmap.Memmap --pid 3476 --dump`
+ - Registry key: `vol -f dump windows.registry.printkey.PrintKey --key 'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\TrueCrypt' --recurse`
+ 
 ## 
 
 `impacket-secretsdump -system SYSTEM -ntds ntds.dit LOCAL`
@@ -81,6 +83,10 @@ vol -f memory.dmp windows.strings.Strings --strings-file strings.txt
 ## Windows
 
  - Groups.xml: contains cpassword ([Fix AES key](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gppref/2c15cbf0-f086-4c74-8b70-1f2fa45dd4be?redirectedfrom=MSDN), base64 encoded, iv = 00 * 16).  Ref: [Privilege Escalation via Group Policy Preferences (GPP)](https://www.mindpointgroup.com/blog/privilege-escalation-via-group-policy-preferences-gpp)
+
+## Linux
+
+ - Dump memory: `dd if=/dev/mem of=/tmp/memory.raw bs=1MB`
 
 ## Reference 
 
