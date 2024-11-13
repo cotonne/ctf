@@ -227,3 +227,4 @@ Cat a payload then keep the interactive command
 
  - [Leaking information](https://github.com/Naetw/CTF-pwn-tips)
  - [Shellcode](https://shell-storm.org/shellcode/index.html)
+ - [Great doc](https://ir0nstone.gitbook.io/notes)
