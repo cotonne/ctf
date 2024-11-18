@@ -100,3 +100,5 @@ D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLO
 
  - Process Explorer
  - ProcDump
+ - [JuicyPotato](https://github.com/ohpe/juicy-potato): If the user has SeImpersonate or SeAssignPrimaryToken privileges then you are SYSTEM.
+ - [Mimikatz](https://github.com/ParrotSec/mimikatz):  extract plaintexts passwords, hash, PIN code and kerberos tickets from memory, pass-the-hash, pass-the-ticket or build Golden tickets
