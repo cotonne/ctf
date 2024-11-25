@@ -7,6 +7,7 @@ Paths are for KALI
 Fast port discovery
 
     $ sudo docker run -it --rm --name rustscan rustscan/rustscan:1.10.0 10.10.10.242
+    $ masscan -p1-65535 10.10.10.10
 
 List all ports with possible vulnerabilities
 
