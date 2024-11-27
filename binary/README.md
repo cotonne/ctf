@@ -5,7 +5,16 @@
  - nasm: asm compiler
  - ld: linker
  - objdump: disassemble sections
+ - nm --demangle : read C++ symbol from ELF
+ - strace / ltrace : trace system / library calls
+ - readelf
  - gdb + gef
+
+```
+$  echo 'set disassembly-flavor intel' > ~/.gdbinit
+$ gdb -ex="b main" --args exe arg1 arg2
+```
+
  - strings (-eL to view wide characters strings)
  
  curl -o  ~/.gdbinit-gef.py -q https://gef.blah.cat/py
@@ -91,8 +100,8 @@ $ ld -o a.out hello.o
 ### Sections 
 
  - .text: executable program
- - .data: constant / static values
- - .bss: uninitialized buffer space
+ - .data: constant / static values, global and static variables that are explicitly initialized by the program.
+ - .bss: uninitialized buffer space, part of the data segment, contains statically allocated variables
 
 
 ## Gdb
@@ -222,6 +231,12 @@ Cat a payload then keep the interactive command
 ```
 (python -c 'print("a"*24+"\x03\x10\x40\x00")'; cat ) | ./ch72.exe
 ```
+# Protections
+
+ - Data Execution Prevention / DEP:  marked regions of memory as "Read-Only" (like .text)
+ - Address Space Layout Randomization / ASLR: make address of memory random
+ - Portable Independant Execution / PIE : make address of .text random at runtime
+ - Canary / Stack smashing protection. If modify by buffer overflow, raise an error at execution time 
 
 # References
 
