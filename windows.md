@@ -29,7 +29,7 @@ Version    BuildNumber
 
  - FAT32
  - NTFS
-   * Integrity Control Access Control List (icacls)
+   * Integrity Control Access Control List (icacls): view permissions, can help identify extra permission allowed to EVERYONE
 
 ```
 icacls c:\dir
@@ -42,6 +42,8 @@ c:\dir NT SERVICE\TrustedInstaller:(F)
 (NP): do not propagate inherit
 (I): permission inherited from parent container
 ```
+ - `.\SharpUp.exe audit`
+
 ### NamedPipe
 
  - `pipelist.exe /accepteula`, ` accesschk.exe /accepteula \\.\Pipe\lsass -v` or `gci \\.\pipe\` (Pipes are used for communication between two applications or processes using shared memory)
@@ -52,6 +54,8 @@ c:\dir NT SERVICE\TrustedInstaller:(F)
  - Windows Defender: cmdlet `Get-MpComputerStatus`
  - AppLocker: rules to allow or deny apps from running based on information about the apps' files. You can also use AppLocker to control which users or groups can run those apps. Cmdlet `Get-AppLockerPolicy -Local` to enumerate policy. ` Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections`
  - User Account Control / UAC. [List of by-passing techniques](https://github.com/hfiref0x/UACME)
+   = Checking if UAC is enabled: `REG QUERY HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\ /v EnableLUA`
+   * Checking UAC level: `REG QUERY HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\ /v ConsentPromptBehaviorAdmin`
 
 ## Network
 
@@ -88,6 +92,7 @@ c:\dir NT SERVICE\TrustedInstaller:(F)
 ### Services
 
  - Use services.msc or `tasklist /svc` to find misconfigured or vulnerable services. (`tasklist` lists all running processes)
+ - Find a service by name `get-service | ? {$_.DisplayName -like 'Druva*'}`
  - View running services (powershell): `Get-Service | ? {$_.Status -eq "Running"} | select -First 2 |fl`
  - Create/Delete/... services: `sc.exe`
  - Query service information: `sc.exe qc wuauserv`
@@ -103,6 +108,10 @@ D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLO
  - lsass.exe	The Local Security Authentication Server verifies the validity of user logons to a PC or server. It generates the process responsible for authenticating users for the Winlogon service.
  - svchost.exe with RPCSS	Manages system services that run from dynamic-link libraries (files with the extension .dll) such as "Automatic Updates," "Windows Firewall," and "Plug and Play." Uses the Remote Procedure Call (RPC) Service (RPCSS).
  - svchost.exe with Dcom/PnP	Manages system services that run from dynamic-link libraries (files with the extension .dll) such as "Automatic Updates," "Windows Firewall," and "Plug and Play." Uses the Distributed Component Object Model (DCOM) and Plug and Play (PnP) services.
+
+ - `accesschk.exe /accepteula -quvcw AService`, check for who has `SERVICE_ALL_ACCESS`
+ - **Unquoted Service Path**: for a service with the path: C:\Program Files (x86)\System Explorer\service\SystemExplorerService64.exe, Windows will look at: C:\Program, C:\Program Files, C:\Program Files (x86)\System, ... If you can create a file at C:\Program.exe or C:\Program Files (x86)\System.exe, the program will be run
+ - `accesschk.exe /accepteula "<USERNAME>" -kvuqsw hklm\System\CurrentControlSet\services` : find Weak Service ACLs. If you can modify `KEY_ALL_ACCESS`, you can overwrite the execution path in service
 
 
 ### Registry
@@ -173,7 +182,8 @@ D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLO
  - [WinPeas]() find weaknesses on host
  - Seatbelt:	C# project for performing a wide variety of local privilege escalation checks
  - PowerUp: PowerShell script for finding common Windows privilege escalation vectors that rely on misconfigurations. It can also be used to exploit some of the issues found
- - SharpUp: C# version of PowerUp
+ - [SharpUp](https://github.com/GhostPack/SharpUp/): C# version of PowerUp
+   = `.\SharpUp.exe audit` to get weak permissions
  - JAWS: PowerShell script for enumerating privilege escalation vectors written in PowerShell 2.0
  - SessionGopher: SessionGopher is a PowerShell tool that finds and decrypts saved session information for remote access tools. It extracts PuTTY, WinSCP, SuperPuTTY, FileZilla, and RDP saved session information
  - Watson: Watson is a .NET tool designed to enumerate missing KBs and suggest exploits for Privilege Escalation vulnerabilities.
