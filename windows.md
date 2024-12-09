@@ -21,7 +21,7 @@ Version    BuildNumber
  - Get env variables: `set`
  - Get installed Windows patched:  `Get-Hotfix` or `wmic qfe`
  - Get installed programs: `Get-WmiObject -Class Win32_Product |  select Name, Version` or `wmic product get name`
-
+ - User enumerations with rpcclient : [rpcclient](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration). Other tools: [nulllinux](https://github.com/m8sec/nullinux), [NetExec](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration)
 
 ## File
 
