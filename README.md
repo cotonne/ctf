@@ -62,6 +62,7 @@ Find if an entry password exits:
 Zone transfert
 
     # host -l domain nameserver
+    # dnsrecon -n 10.20.30.40 -d my-domain.com -t axfr
 
 # Cracking
 
@@ -88,7 +89,7 @@ Cracking with hashcat:
 
 Building wordlists by scrapping a website:
 
-   # cewl http://website > dic.txt
+    # cewl http://website > dic.txt
 
 
 # Services
