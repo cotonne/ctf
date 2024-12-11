@@ -335,9 +335,13 @@ Port forwarding to access a local postgres server:
  - Find file with sticky bit: find / -type d -perm -1000 -exec ls -ld {} \;
  - Exec with capabilities
  - Running services with elevated privileges
- - sudo -L. Running vim/less/journalctl/... can give you a shell. [GTFOBins](https://gtfobins.github.io/) lists mutliple ways to execute a command from an editor. Also, you might need to resize your windows to create a shell.
- - SSH keys
+ - sudo -L. Running vim/less/journalctl/... can give you a shell.  - SSH keys
  - crontab
+ - Tools
+   * [GTFOBins](https://gtfobins.github.io/) lists mutliple ways to execute a command from an editor. Also, you might need to resize your windows to create a shell. For windows: [LOLBAS](https://lolbas-project.github.io/)
+   * [pspy](https://github.com/DominicBreuker/pspy) monitor running processes
+   * [WinPeas / LinPeas](https://github.com/peass-ng/PEASS-ng/tree/master) gives a lot of informations
+
  
 ## Tools
 
@@ -426,6 +430,8 @@ Put all users in users.txt and all passwords in passwords.txt. Use scanners from
 Find CVE
 
     # searchsploit filezilla
+    # searchsploit -x 5555 # inspect payload
+    # searchsploit -m 5555 # copy payload
 
 # Android
 
