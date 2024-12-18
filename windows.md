@@ -23,6 +23,8 @@ Version    BuildNumber
  - Get installed programs: `Get-WmiObject -Class Win32_Product |  select Name, Version` or `wmic product get name`
  - User enumerations with rpcclient : [rpcclient](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration). Other tools: [nulllinux](https://github.com/m8sec/nullinux), [NetExec](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration)
 
+ - `runas /savecred /user:ad\bob "command"`
+
 ## File
 
 ### File System
@@ -44,7 +46,28 @@ c:\dir NT SERVICE\TrustedInstaller:(F)
 ```
  - `.\SharpUp.exe audit`
 
-### NamedPipe
+### Creds
+
+ - Search for a string: `findstr /SIM /C:"password" *.txt *.ini *.cfg *.config *.xml unattend.xml`, `select-string -Path *.txt -Pattern password`
+ - Search for a file: `dir /S /B *pass*.txt == *pass*.xml == *pass*.ini == *cred* == *vnc* == *.config*`, `where /R C:\ *.config`, `Get-ChildItem C:\ -Recurse -Include *.rdp, *.config, *.vnc, *.cred -ErrorAction Ignore`
+ - IIS configuration file: C:\inetpub\wwwroot\web.config
+ - Chrome dictionnary file: `gc 'C:\Users\htb-student\AppData\Local\Google\Chrome\User Data\Default\Custom Dictionary.txt' | Select-String password`, [SharpChrome](https://github.com/GhostPack/SharpDPAPI)
+ - PowerShell History: `C:\Users\<username>\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt`
+ - List stored creds `cmdkey /list`
+ - PowerShell Credentials: 
+ 
+```
+$encryptedPassword = Import-Clixml -Path 'C:\scripts\pass.xml'
+$decryptedPassword = $encryptedPassword.GetNetworkCredential().Password
+```
+ - Autologin Credentials: `reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"`
+ - Retrieving Saved Wireless Passwords: `netsh wlan show profile ilfreight_corp key=clear`
+ - [LaZagne](https://github.com/AlessandroZ/LaZagne):	Tool used for retrieving passwords stored on a local machine from web browsers, chat tools, databases, Git, email, memory dumps, PHP, sysadmin tools, wireless network configurations, internal Windows password storage mechanisms, and more
+ - [SessionGopher](https://github.com/Arvanaghi/SessionGopher): SessionGopher is a PowerShell tool that finds and decrypts saved session information for remote access tools. It extracts PuTTY, WinSCP, SuperPuTTY, FileZilla, and RDP saved session information
+ 
+
+
+## NamedPipe
 
  - `pipelist.exe /accepteula`, ` accesschk.exe /accepteula \\.\Pipe\lsass -v` or `gci \\.\pipe\` (Pipes are used for communication between two applications or processes using shared memory)
 
@@ -56,6 +79,7 @@ c:\dir NT SERVICE\TrustedInstaller:(F)
  - User Account Control / UAC. [List of by-passing techniques](https://github.com/hfiref0x/UACME)
    = Checking if UAC is enabled: `REG QUERY HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\ /v EnableLUA`
    * Checking UAC level: `REG QUERY HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\ /v ConsentPromptBehaviorAdmin`
+
 
 ## Network
 
@@ -185,7 +209,5 @@ D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLO
  - [SharpUp](https://github.com/GhostPack/SharpUp/): C# version of PowerUp
    = `.\SharpUp.exe audit` to get weak permissions
  - JAWS: PowerShell script for enumerating privilege escalation vectors written in PowerShell 2.0
- - SessionGopher: SessionGopher is a PowerShell tool that finds and decrypts saved session information for remote access tools. It extracts PuTTY, WinSCP, SuperPuTTY, FileZilla, and RDP saved session information
  - Watson: Watson is a .NET tool designed to enumerate missing KBs and suggest exploits for Privilege Escalation vulnerabilities.
- - LaZagne:	Tool used for retrieving passwords stored on a local machine from web browsers, chat tools, databases, Git, email, memory dumps, PHP, sysadmin tools, wireless network configurations, internal Windows password storage mechanisms, and more
  - Windows Exploit Suggester - Next Generation: WES-NG is a tool based on the output of Windows' systeminfo utility which provides the list of vulnerabilities the OS is vulnerable to, including any exploits for these vulnerabilities. Every Windows OS between Windows XP and Windows 10, including their Windows Server counterparts, is supported
