@@ -149,6 +149,7 @@ D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLO
 
 ### Users
 
+ - impacket-lookupsid cicada.htb/guest@10.10.11.35
  - `whoami /all`
  - `query user`: get information on logged-in users
  - Display username: `echo %USERNMAE%`
