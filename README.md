@@ -169,6 +169,9 @@ $WebClient.DownloadFile("https://www.contoso.com/file","C:\path\file")
     systeminfo
     net users
     net groups
+    impacket-lookupsid machine/user@10.10.10.10
+    nulllinux 10.10.10.10 -u guest
+
 
 Get all infos about user:
 
