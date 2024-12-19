@@ -100,6 +100,14 @@ For ICMP
 
     tcpdump -i tun0 icmp
 
+## Extract creds from traffic
+
+[net-creds](https://github.com/DanMcInerney/net-creds)
+
+    sudo python net-creds.py -i eth0
+    sudo python net-creds.py -p pcapfile
+
+
 ## HTTP Service
 
 Share your local directory
