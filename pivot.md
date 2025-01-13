@@ -1,6 +1,16 @@
 # Pivoting
 
-## Proxy SOCKS with SSH
+## SSH
+
+### Port forwarding
+
+```bash
+kali@attacker$ ssh root@victim -L 127.0.0.1:4444:other_host:5432 -N
+kali@attacker$ ssh root@victim -R victim:4444:attacker:5555 -N
+root@victim$ ssh kali@attacker -R 127.0.0.1:4444:other_host:5432 -N
+```
+
+### Proxy SOCKS
 
 ```bash
 $ ssh -D 9050 root@victime
