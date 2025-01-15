@@ -62,6 +62,13 @@ $ ./reverse.bin
 
  * From bash: `for i in {1..254} ;do (ping -c 1 172.16.5.$i | grep "bytes from" &) ;done`
  * From MSF: `msf6 exploit(multi/handler) >  run post/multi/gather/ping_sweep RHOSTS=172.16.5.0/24`
+ * From Windows:
+
+```
+curl -o Get-PingSweep.ps1https://gist.githubusercontent.com/joegasper/93ff8ae44fa8712747d85aa92c2b4c78/raw/ba84c297a051833e0b48b3cb31bfbaa8d7fec35f/Get-PingSweep.ps1
+Import-Module .\Get-PingSweep.ps1
+Get-PingSweep -SubNet '172.16.6'
+```
 
 #### Nmap scan:
 
