@@ -219,6 +219,10 @@ View rights of a directory
 
      icacls <dir>
 
+Connect with smbexec
+
+     impacket-smbexec DOMAIN/user@IP
+
 ## Powershell
 
 Running remote script directly
