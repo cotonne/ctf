@@ -106,7 +106,7 @@ vol -f memory.dmp windows.strings.Strings --strings-file strings.txt
  - RunMRU Lists: Registry: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU	
  - Jump Lists: %AppData%\Microsoft\Windows\Recent
  - Windows User Access Logs: `c:\windows\system32\LogFiles\SUM`
- - Hiding informations: Alternate Data Streams / File Slack (remaining space not used by a file in a block)
+ - Hiding informations: Alternate Data Streams / File Slack (remaining space not used by a file in a block). [ADS are also available for downloaded files](https://www.digital-detective.net/forensic-analysis-of-zone-identifier-stream/)
  - Groups.xml: contains cpassword ([Fix AES key](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gppref/2c15cbf0-f086-4c74-8b70-1f2fa45dd4be?redirectedfrom=MSDN), base64 encoded, iv = 00 * 16).  Ref: [Privilege Escalation via Group Policy Preferences (GPP)](https://www.mindpointgroup.com/blog/privilege-escalation-via-group-policy-preferences-gpp)
  - Browser files, ...
  - Events logs (`c:\windows\System32\winevt\logs\*.evtx`
@@ -125,7 +125,7 @@ vol -f memory.dmp windows.strings.Strings --strings-file strings.txt
 
 ## Mounting a disk 
 
-Autopsy can also be used
+[Autopsy](https://www.autopsy.com/) can also be used
 
 ### Identify partitions
 
@@ -144,6 +144,7 @@ DEVICE2         1126400 40962047 39835648   19G  7 HPFS/NTFS/exFAT
 ```
 
 ### Mouting partitions
+
 ```
 sudo mount -o ro,noload -o loop,offset=$((2048*512)) -t ntfs-3g SCENAR $PWD/DEVICE1
 sudo mount -o ro -o loop,offset=$((1126400*512)) -t ntfs3 SCENAR $PWD/SCENAR2
