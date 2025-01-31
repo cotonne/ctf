@@ -151,6 +151,26 @@ sudo mount -o ro -o loop,offset=$((1126400*512)) -t ntfs3 SCENAR $PWD/SCENAR2
 
 Multiple drivers for ntfs : ntfs3, ntfs-3g
 
+## Tools
+
+### chainsaw
+
+Can use [sigma rules](https://github.com/SigmaHQ/sigma) to detect attacks
+
+```
+chainsaw hunt --mapping sigma-mapping.yml --rules sigma/ $HOME/mount/Windows/System32/winevt/Logs/
+chainsaw search -e event  $HOME/mount/Windows/System32/winevt/Logs/
+```
+
+### Plaso / log2timeline
+
+Built a timeline by merging multiple sources (event logs, registries, ...)
+
+```
+log2timeline.py --artifact-filters WindowsEventLogSystem,WindowsMountedDevices,WindowsXMLEventLogApplication,WindowsXMLEventLogPowerShell,WindowsXMLEventLogSecurity,WindowsXMLEventLogSysmon,WindowsCommandProcessorAutoRun /path/to/mounted/drive
+psort.py --output-time-zone "UTC" -o l2tcsv -w 20250131T091253-XXX.csv 20250131T091253-XXX.plaso
+```
+
 ## Extracting hashes
 
 ```
