@@ -357,6 +357,7 @@ Port forwarding to access a local postgres server:
  - Running services with elevated privileges
  - sudo -L. Running vim/less/journalctl/... can give you a shell.  - SSH keys
  - crontab
+   * Any wildcard in the command is a joker. After that, you can add what you want. For example, [hacker10 ALL= (root) /bin/less /var/log/* => /bin/less /var/log/* /etc/passwd](https://blog.compass-security.com/2012/10/dangerous-sudoers-entries-part-4-wildcards/)
  - Tools
    * [GTFOBins](https://gtfobins.github.io/) lists mutliple ways to execute a command from an editor. Also, you might need to resize your windows to create a shell. For windows: [LOLBAS](https://lolbas-project.github.io/)
    * [pspy](https://github.com/DominicBreuker/pspy) monitor running processes
