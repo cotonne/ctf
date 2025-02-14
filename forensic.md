@@ -163,6 +163,13 @@ chainsaw hunt --mapping sigma-mapping.yml --rules sigma/ $HOME/mount/Windows/Sys
 chainsaw search -e event  $HOME/mount/Windows/System32/winevt/Logs/
 ```
 
+```
+wget https://github.com/SigmaHQ/sigma/releases/download/r2025-02-03/sigma_all_rules.zip
+unzip sigma_all_rules.zip
+wget https://github.com/cyb3rpeace/chainsaw/raw/refs/heads/master/mappings/sigma-event-logs-all.yml
+chainsaw hunt --sigma ../rules --mapping ../sigma-event-logs-all.yml *.evtx
+```
+
 ### Plaso / log2timeline
 
 Built a timeline by merging multiple sources (event logs, registries, ...)
