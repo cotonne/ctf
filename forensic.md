@@ -197,6 +197,7 @@ Based on [evtx_dump](https://github.com/omerbenamram/evtx)
  - [Evtxtoelk](https://github.com/dgunter/evtxtoelk)
  - [dfir toolkit](https://github.com/dfir-dd/dfir-toolkit)
  - [evtx-hunter](https://github.com/NVISOsecurity/evtx-hunter)
+ - [Extract hashes from Evtx](https://github.com/EdwardsCP/HuntExes) , can be supplied to [Malware Bazaar](https://bazaar.abuse.ch/) 
 
 ## Extracting hashes
 
