@@ -161,6 +161,7 @@ Can use [sigma rules](https://github.com/SigmaHQ/sigma) to detect attacks
 ```
 chainsaw hunt --mapping sigma-mapping.yml --rules sigma/ $HOME/mount/Windows/System32/winevt/Logs/
 chainsaw search -e event  $HOME/mount/Windows/System32/winevt/Logs/
+chainsaw search -t 'Event.System.EventID: =4688'  $HOME/mount/Windows/System32/winevt/Logs/
 ```
 
 ```
@@ -178,6 +179,24 @@ Built a timeline by merging multiple sources (event logs, registries, ...)
 log2timeline.py --artifact-filters WindowsEventLogSystem,WindowsMountedDevices,WindowsXMLEventLogApplication,WindowsXMLEventLogPowerShell,WindowsXMLEventLogSecurity,WindowsXMLEventLogSysmon,WindowsCommandProcessorAutoRun /path/to/mounted/drive
 psort.py --output-time-zone "UTC" -o l2tcsv -w 20250131T091253-XXX.csv 20250131T091253-XXX.plaso
 ```
+
+### Zircolite
+
+```
+git clone https://github.com/wagga40/Zircolite.git
+cd Zircolite
+python3 -m venv venv
+. venv/bin/activate
+./zircolite.py --events DIR --package
+```
+
+Based on [evtx_dump](https://github.com/omerbenamram/evtx)
+
+### Others
+
+ - [Evtxtoelk](https://github.com/dgunter/evtxtoelk)
+ - [dfir toolkit](https://github.com/dfir-dd/dfir-toolkit)
+ - [evtx-hunter](https://github.com/NVISOsecurity/evtx-hunter)
 
 ## Extracting hashes
 
