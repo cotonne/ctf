@@ -223,3 +223,4 @@ Based on [evtx_dump](https://github.com/omerbenamram/evtx)
 
  - [Internal All The things](https://swisskyrepo.github.io/InternalAllTheThings/active-directory/ad-adds-ntds-dumping/#forensic-tools)
  - [MITRE ATT&CK T1003 Credential Dumping](https://www.picussecurity.com/resource/blog/picus-10-critical-mitre-attck-techniques-t1003-credential-dumping)
+
