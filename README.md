@@ -47,6 +47,12 @@ From stdin
 
 Reference: [wfuzz manual](https://wfuzz.readthedocs.io/en/latest/user/advanced.html)
 
+With ffuf:
+
+    $ ffuf -request request.bin -request-proto http -w /usr/share/wordlists/SecLists/Discovery/Web-Content/raft-large-extensions.txt -fc 400
+
+[Great collections of wordlists]-https://github.com/danielmiessler/SecLists/)
+
 ## LDAP
 
 List users:
