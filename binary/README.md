@@ -1,5 +1,35 @@
 # Assembly
 
+## Tree
+
+```mermaid
+flowchart TD
+  STACK_OVERFLOW{Is there a<br/>stack overflow ?} -->|Yes| ASLR{ASLR is on?}
+    ASLR -->|No| SHELLCODE[Retrieve stack address<br/>Write address in RET<br/>Use pwn.shellcraft]
+      ASLR -->|Yes| CANARY{Is Canary on?}
+        CANARY -->|No| GOT{Is the address of a libc function from GOT printed?}
+          GOT -->|Yes| LIBC{Do you know the current libc version?}
+            LIBC -->|Yes| WHEREWRITE{Where can you write?}
+              WHEREWRITE -->|Overwrite RET| ret2libcRET{Use one_gadget<br/>base_libc = @func_got - @libc<br/>Write @base_libc + one_gadget in RET}
+              WHEREWRITE -->|Overwrite GOT| RELRO{Is Full/Partial RelRo On?}
+                RELRO -->|No| ret2libcGOT{Use one_gadget<br/>base_libc = @func_got - @libc<br/>Write @base_libc + one_gadget in GOT}
+                RELRO -->|Yes| SYSCALL
+            LIBC -->|No| SYSCALL{Is there syscall gadget in ELF?}
+              SYSCALL -->|Yes| BINSH{Is there /bin/sh at a known address? BSS, Stack, Heap, ELF...}
+                BINSH -->|Yes| EXECVE{syscall = execve rax=59, rdi=@binsh, rdx=0, rsi=0}
+                BINSH -->|No| NOBINSH{Can you write /bin/sh at a known address?}
+                  NOBINSH --> |Yes| EXECVE
+              SYSCALL -->|No| ROP{ROP<br/>Can you read intesting address form somewhere?}
+                ROP -->|Yes| xxx
+          GOT -->|No| RET2DLRESOLVE[ret2dlresolve<br/>https://docs.pwntools.com/en/stable/rop/ret2dlresolve.html]
+        CANARY --> |Yes| OVER_C{Can you write where you want?}
+          OVER_C -->|Yes| STACK_ADDR{Do you have stack addr?}
+            STACK_ADDR -->|Yes| BY_PASS_CANARY[Use that to directly write RET<br/>Without modify the canary]
+            BY_PASS_CANARY --> GOT
+    FMTSTR[printf with controlled args: https://docs.pwntools.com/en/dev/fmtstr.html]
+```
+
+
 ## Tools
 
  - nasm: asm compiler
