@@ -53,6 +53,13 @@ With ffuf:
 
 [Great collections of wordlists]-https://github.com/danielmiessler/SecLists/)
 
+## Code analysis
+
+ - If directory .git is exposed: [git-dumper](https://github.com/arthaud/git-dumper)
+ - [Secrets scanner](https://github.com/Yelp/detect-secrets)
+ - [Vuln scanner](https://semgrep.dev/docs/getting-started/quickstart)
+ - SCA
+
 ## LDAP
 
 List users:
