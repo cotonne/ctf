@@ -268,6 +268,10 @@ Cat a payload then keep the interactive command
  - Portable Independant Execution / PIE : make address of .text random at runtime
  - Canary / Stack smashing protection. If modify by buffer overflow, raise an error at execution time 
 
+# Windows
+
+ - PE Tree
+
 # References
 
  - [Leaking information](https://github.com/Naetw/CTF-pwn-tips)

