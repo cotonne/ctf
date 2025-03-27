@@ -4,6 +4,7 @@
 
 ### Quack Quack (Very Easy)
 
+
 ### Blessing (Very Easy)
 
 ```
@@ -59,7 +60,63 @@ Code is available here : [script_blessing.py][script_blessing.py]
 
 ### Crossbow (Easy)
 
+```
+$ file crossbow 
+crossbow: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, with debug_info, not stripped
+                                                                                                                   
+$ checksec --file=crossbow
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols         FORTIFY Fortified  Fortifiable     FILE
+Partial RELRO   Canary found      NX enabled    No PIE          No RPATH   No RUNPATH   241 Symbols       No    0 0crossbow
+```
+
+Open the binary with your favorite decompiler. The code is simplified and variables are renamed:
+
+```
+00401220        if (__isoc99_scanf("%d%*c", 0) != 1) {
+00401259            exit(0x520);
+00401220        }
+00401220        
+0040126f        int32_t index;
+0040126f        void** buffer = ((int64_t)index << 3) + leak_stack_address;
+00401282        *(uint64_t*)buffer = calloc(1, 0x80);
+00401282        
+0040128b        if (!*(uint64_t*)buffer) {
+004012c4            exit(0x1b39);
+0040128b        }
+0040128b        
+004012f6        printf("%s\n[%sSir Alaric%s]: Give me yo…", 0);
+00401321        void* result = fgets(*(uint64_t*)((char*)leak_stack_address + ((int64_t)index << 3)), 0x80, U"\t");
+00401321        
+00401329        if (result)
+0040136d            return result;
+```
+
+The argument of the function is an address of the stack. 
+We can provide a value and we will on the stack with `fgets`.
+
+There is no control on the value, so we can write wherever we want on the stack.
+We can write directly on the return address and do a classical ROP.
+
+We find averything we need in the stack to call execve:
+ - syscall
+ - pop rax
+ - pop rdi
+ - mov [rdi], rax
+
+rsi and rdi are NULL. We can write "/bin/sh" in the bss and call execve with it.
+
+Code is available here : [script_crossbow.py][script_crossbow.py]
+
 ### Laconic (Easy)
+
+Interesting challenge. There is only one call to `read`. When we look at the context, 
+it will write to the stack. So we can overwrite the return pointer and we have a syscall gadget.
+
+We can write up to 262 bytes, enough for a sigreturn exploitation.
+Sigreturn is a syscall that can be used to set register.
+So, we can call it with values to call execve, redo a syscall for and get a shell.
+
+Code is available here : [script_laconic.py][script_laconic.py]
 
 ### Contractor (Medium)
 
