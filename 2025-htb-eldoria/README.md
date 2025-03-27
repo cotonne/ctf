@@ -56,7 +56,7 @@ Here, if buf is NULL, `write` will set the value at the `buffer_length` position
 
 By sending the address received plus one, `rax_2` is set to zero:
 
-Code is available here : [script_blessing.py][script_blessing.py]
+Code is available here : [script_blessing.py](script_blessing.py)
 
 ### Crossbow (Easy)
 
@@ -105,7 +105,7 @@ We find averything we need in the stack to call execve:
 
 rsi and rdi are NULL. We can write "/bin/sh" in the bss and call execve with it.
 
-Code is available here : [script_crossbow.py][script_crossbow.py]
+Code is available here : [script_crossbow.py](script_crossbow.py)
 
 ### Laconic (Easy)
 
@@ -116,7 +116,7 @@ We can write up to 262 bytes, enough for a sigreturn exploitation.
 Sigreturn is a syscall that can be used to set register.
 So, we can call it with values to call execve, redo a syscall for and get a shell.
 
-Code is available here : [script_laconic.py][script_laconic.py]
+Code is available here : [script_laconic.py](script_laconic.py)
 
 ### Contractor (Medium)
 
@@ -192,7 +192,7 @@ If we are lucky and we can change the lowest byte to a correct shift, changing t
 **0x00007fffcb0d8820** to **0x00007fffcb0d88XY**, making it possible to directly change the return address.
 We will need around 8 tests in average, due to the fact that Y must be equal to 0 to have an align stack.
 
-Code is available here : [script_contractor.py][script_contractor.py]
+Code is available here : [script_contractor.py](script_contractor.py)
 
 ## Reverse
 
