@@ -1,26 +1,35 @@
 # Assembly
 
-## Tree
+## Pwn Stack
+### Decision Tree
 
 ```mermaid
 flowchart TD
   STACK_OVERFLOW{Is there a<br/>stack overflow ?} -->|Yes| ASLR{ASLR is on?}
     ASLR -->|No| SHELLCODE[Retrieve stack address<br/>Write address in RET<br/>Use pwn.shellcraft]
       ASLR -->|Yes| CANARY{Is Canary on?}
-        CANARY -->|No| GOT{Is the address of a libc function from GOT printed?}
+        CANARY -->|No| GOT{<b>Leaked libc address</b><br/>Is the address of a libc function from GOT printed?}
           GOT -->|Yes| LIBC{Do you know the current libc version?}
             LIBC -->|Yes| WHEREWRITE{Where can you write?}
-              WHEREWRITE -->|Overwrite RET| ret2libcRET{Use one_gadget<br/>base_libc = @func_got - @libc<br/>Write @base_libc + one_gadget in RET}
+              WHEREWRITE -->|Overwrite RET| ret2libcRET[Use one_gadget<br/>base_libc = @func_got - @libc<br/>Write @base_libc + one_gadget in RET]
               WHEREWRITE -->|Overwrite GOT| RELRO{Is Full/Partial RelRo On?}
                 RELRO -->|No| ret2libcGOT{Use one_gadget<br/>base_libc = @func_got - @libc<br/>Write @base_libc + one_gadget in GOT}
                 RELRO -->|Yes| SYSCALL
             LIBC -->|No| SYSCALL{Is there syscall gadget in ELF?}
               SYSCALL -->|Yes| BINSH{Is there /bin/sh at a known address? BSS, Stack, Heap, ELF...}
-                BINSH -->|Yes| EXECVE{syscall = execve rax=59, rdi=@binsh, rdx=0, rsi=0}
+                BINSH -->|Yes| EXECVE[syscall = execve rax=59, rdi=@binsh, rdx=0, rsi=0]
                 BINSH -->|No| NOBINSH{Can you write /bin/sh at a known address?}
                   NOBINSH --> |Yes| EXECVE
-              SYSCALL -->|No| ROP{ROP<br/>Can you read intesting address form somewhere?}
-                ROP -->|Yes| xxx
+                  NOBINSH --> |No| SROP{SROP<br/>Do you have enough place for SigReturn syscall}
+                    SROP --> |Yes| Do_SROP[Do SROP]
+                    SROP --> |No| mprotect
+                    mprotect --> CallGOT[Try calling functions from GOT (read, write, ...)]
+                    CallGOT --> ret2csu[ret2csu<br/>Try calling gadgets from __libc_csu_init_main]
+                    ret2csu --> ropchain[Try to build a ROP Chain]
+              SYSCALL -->|No| ROP{ROP<br/>Is PIE Enabled?}
+                ROP -->|Yes| LeakPIE{Is an address from program leaked?}
+                  LeakPIE --> | Yes| CallGOT
+                ROP -->|No| CallGOT
           GOT -->|No| RET2DLRESOLVE[ret2dlresolve<br/>https://docs.pwntools.com/en/stable/rop/ret2dlresolve.html]
         CANARY --> |Yes| OVER_C{Can you write where you want?}
           OVER_C -->|Yes| STACK_ADDR{Do you have stack addr?}
@@ -29,6 +38,34 @@ flowchart TD
     FMTSTR[printf with controlled args: https://docs.pwntools.com/en/dev/fmtstr.html]
 ```
 
+### Techniques
+
+#### ret2csu
+
+#### ret2dl_resolve
+
+#### SigReturn Oriented Programming (SROP)
+
+
+### References
+
+ * [ROPEmporium](https://ropemporium.com/)
+
+## Pwn Heap
+
+### Decision Tree
+
+### Techniques
+
+ - Exploit unsafe unlink with free
+ - tcache poisonning
+ - Leak from unsorted bin [https://github.com/BreizhCTF/breizhctf-2025/blob/main/pwn/binary-cooker/solve/WRITEUP.md]
+ - Overwrite hook `__free_hook` [https://github.com/hackthebox/cyber-apocalypse-2025/tree/main/pwn/%5BMedium%5D%20Strategist]
+
+### References
+
+ * [how2heap](https://github.com/shellphish/how2heap)
+ * Temple of PWN: [Youtube](https://youtube.com/playlist?list=PLiCcguURxSpbD9M0ha-Mvs-vLYt-VKlWt&feature=shared) and [github](https://github.com/LMS57/TempleOfPwn)
 
 ## Tools
 
