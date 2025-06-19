@@ -69,6 +69,7 @@ With ffuf:
  - [Secrets scanner](https://github.com/Yelp/detect-secrets)
  - [Vuln scanner](https://semgrep.dev/docs/getting-started/quickstart)
  - SCA
+ - [semgrep](https://semgrep.dev/)
 
 ## LDAP
 
