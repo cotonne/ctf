@@ -13,6 +13,10 @@ List all ports with possible vulnerabilities
 
     $ nmap -A -p4386 -v -sS -sV --script vuln 10.10.10.178
 
+List top 1000 UDP ports with possible vulnerabilities
+
+    $ nmap -A -v -sU -sV --script vuln 10.10.10.178
+
 You can also use netcat to do port scanning
 
     $ nc -zv localhost 1-65535
@@ -50,8 +54,14 @@ Reference: [wfuzz manual](https://wfuzz.readthedocs.io/en/latest/user/advanced.h
 With ffuf:
 
     $ ffuf -request request.bin -request-proto http -w /usr/share/wordlists/SecLists/Discovery/Web-Content/raft-large-extensions.txt -fc 400
+    $ ffuf -w file1:FUZZ -w file2:FUZZ2 -u http://site/service/FUZZFUZZ2 -fc 301
 
-[Great collections of wordlists]-https://github.com/danielmiessler/SecLists/)
+### Great collections of wordlists
+
+ - https://github.com/danielmiessler/SecLists/
+ - /usr/share/wordlists/amass/all.txt
+ - /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
+ - https://github.com/Bo0oM/fuzz.txt/blob/master/fuzz.txt
 
 ## Code analysis
 
