@@ -63,6 +63,12 @@ With ffuf:
  - /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
  - https://github.com/Bo0oM/fuzz.txt/blob/master/fuzz.txt
 
+With gobuster
+
+    $ gobuster vhost -u http://xxx -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt --append-domain
+
+With reconspider https://academy.hackthebox.com/storage/modules/144/ReconSpider.v1.2.zip
+
 ## Code analysis
 
  - If directory .git is exposed: [git-dumper](https://github.com/arthaud/git-dumper)
@@ -87,6 +93,10 @@ Zone transfert
 
     # host -l domain nameserver
     # dnsrecon -n 10.20.30.40 -d my-domain.com -t axfr
+
+## WebShell
+
+ - [Laudanum](https://github.com/jbarcia/Web-Shells/tree/master/laudanum)
 
 # Cracking
 

