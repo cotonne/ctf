@@ -503,3 +503,4 @@ unzip file.apk
 
  - [PayloadAllThings](https://github.com/swisskyrepo/PayloadsAllTheThings/)
  - [How to attack kerberos](https://www.tarlogic.com/en/blog/how-to-attack-kerberos/)
+ - [Default creds cheat sheet](https://github.com/ihebski/DefaultCreds-cheat-sheet) `pip3 install defaultcreds-cheat-sheet`
