@@ -19,6 +19,10 @@
 
 ## Common attacks
 
+### Username generation
+
+ - [Username Anarchy](https://github.com/urbanadventurer/username-anarchy)
+
 ### KerbeRoastable
 
 
@@ -36,7 +40,8 @@
 
  - Kerbrute
 
-    kerbrute_linux_amd64 bruteuser -d fabricorp.local --dc 10.10.10.193 /usr/share/wordlists/rockyou.txt bnielson
+    `kerbrute_linux_amd64 userenum --dc aaa.bbb.ccc.ddd --domain DOMAIN usernames.txt`
+    `kerbrute_linux_amd64 bruteuser -d fabricorp.local --dc 10.10.10.193 /usr/share/wordlists/rockyou.txt bnielson`
  
  - Pass the hash: You can connect using the hash of the user
 
