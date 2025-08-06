@@ -59,9 +59,12 @@ With ffuf:
 ### Great collections of wordlists
 
  - https://github.com/danielmiessler/SecLists/
+     - Parameter: https://github.com/danielmiessler/SecLists/raw/refs/heads/master/Discovery/Web-Content/burp-parameter-names.txt
+     - Linux LFI: https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/LFI/LFI-gracefulsecurity-linux.txt ,  https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/LFI/LFI-Jhaddix.txt
  - /usr/share/wordlists/amass/all.txt
  - /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
  - https://github.com/Bo0oM/fuzz.txt/blob/master/fuzz.txt
+ - 
 
 With gobuster
 
