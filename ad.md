@@ -1,5 +1,51 @@
 # AD
 
+ - https://wadcoms.github.io/
+ - https://lolbas-project.github.io/
+
+## Pentest
+
+### Enumeration
+
+#### Ports exposed by an AD:
+
+UDP Ports 
+ - 53: DNS
+
+TCP Ports 
+ - 88: Kerberos
+ - 389 - LDAP, 636 - LDAPS (SSL), 3268/3269 - LDAP Global Catalog
+
+Others:
+ - 135: RPC
+ - 139: SMB
+ - 445: SMB
+ - 5985 (HTTP), 5986 (HTTPS): WinRM 
+
+
+
+### Usernames
+
+#### LDAP
+
+ - Domain metadata: `ldapsearch -LLL -x -H ldap://voleur.htb  -b '' -s base '(objectclass=*)'`
+ - Get users: `ldapsearch -LLL -x -H ldap://my.domain.com -D a.user@my.domain.com -w PASSWORD -b dc=my,dc=domain,dc=com '(objectclass=user)`
+ - Get users specific attributes: `ldapsearch -LLL -x -H ldap://my.domain.com -D a.user@my.domain.com -w PASSWORD -b dc=my,dc=domain,dc=com '(objectclass=user) sAMAccountName memberOf`
+ - Other objectclasses: computer, groups
+
+#### Others
+
+ - [Username Anarchy](https://github.com/urbanadventurer/username-anarchy)
+ - rpcclient
+ - enum4linux
+
+### Passwords
+
+ - Kerbrute
+ - Get password policies: `crackmapexec smb 172.16.5.5 -u avazquez -p Password123 --pass-pol
+ - CeWL
+ - cupp
+
 ## Definition
 
  - Domain Controllers: handle authentication requests, verify users on the network, and control who can access the various resources in the domain
