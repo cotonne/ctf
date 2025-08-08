@@ -22,7 +22,46 @@ Others:
  - 445: SMB
  - 5985 (HTTP), 5986 (HTTPS): WinRM 
 
+### Kerberos
 
+#### From linux
+
+ - Configuration
+
+```
+$ sudo apt-get install heimdal-clients -y
+$ cat /etc/krb5.conf # CASE SENSITIVE!!
+[libdefaults]
+	default_realm = DOMAIN.COM
+[realms]
+	DOMAIN.COM = {
+		kdc = domain.com
+		admin_server = domain.com
+		default_domain = domain.com
+	}
+[domain_realm]
+ domain.com = DOMAIN.COM
+ .domain.com = DOMAIN.COM
+$ rdate -n domain.com
+```
+
+ - Get a TGT
+```
+$ kinit a.user@DOMAIN.COM
+$ klist
+Credentials cache: FILE:/tmp/krb5cc_1002
+        Principal: a.user@domain.com
+
+  Issued                Expires               Principal
+Aug  8 11:25:33 2025  Aug  8 21:25:33 2025  krbtgt/domain.com@DOMAIN.COM
+$ export KRB5CCNAME=/tmp/krb5cc_1002
+```
+
+
+#### From Windows
+
+ - mimikatz
+   - 
 
 ### Usernames
 
