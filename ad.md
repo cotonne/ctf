@@ -65,6 +65,8 @@ $ export KRB5CCNAME=/tmp/krb5cc_1002
 
 ### Usernames
 
+ - [Kerbrute](https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64): Password spraying, account enum, brute force
+
 #### LDAP
 
  - Domain metadata: `ldapsearch -LLL -x -H ldap://voleur.htb  -b '' -s base '(objectclass=*)'`
