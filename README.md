@@ -56,6 +56,11 @@ With ffuf:
     $ ffuf -request request.bin -request-proto http -w /usr/share/wordlists/SecLists/Discovery/Web-Content/raft-large-extensions.txt -fc 400
     $ ffuf -w file1:FUZZ -w file2:FUZZ2 -u http://site/service/FUZZFUZZ2 -fc 301
 
+Useful tools for web:
+
+ - Screenshot of website: [eyewitness](https://github.com/RedSiege/EyeWitness), [aquatone](https://github.com/shelld3v/aquatone)
+ - CMS scanners: wpscan, [droopescan](https://github.com/SamJoan/droopescan)
+
 ### Great collections of wordlists
 
  - https://github.com/danielmiessler/SecLists/
@@ -96,6 +101,7 @@ Zone transfert
 
     # host -l domain nameserver
     # dnsrecon -n 10.20.30.40 -d my-domain.com -t axfr
+    # dig axfr my-domain.com @10.20.30.40
 
 ## WebShell
 
